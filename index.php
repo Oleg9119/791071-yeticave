@@ -9,37 +9,37 @@ $categories = ['Доски и лыжи', 'Крепления', 'Ботинки',
 $ads = [
     0 => [
         'name' => '2014 Rossignol District Snowboard',
-        'categorie' => 'Доски и лыжи',
+        'category' => 'Доски и лыжи',
         'cost' => 10999,
         'img' => 'img/lot-1.jpg'
     ],
     1 => [
         'name' => 'DC Ply Mens 2016/2017 Snowboard',
-        'categorie' => 'Доски и лыжи',
+        'category' => 'Доски и лыжи',
         'cost' => 159999,
         'img' => 'img/lot-2.jpg'
     ],
     2 => [
         'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-        'categorie' => 'Крепления',
+        'category' => 'Крепления',
         'cost' => 8000,
         'img' => 'img/lot-3.jpg'
     ],
     3 => [
         'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-        'categorie' => 'Ботинки',
+        'category' => 'Ботинки',
         'cost' => 10999,
         'img' => 'img/lot-4.jpg'
     ],
     4 => [
         'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-        'categorie' => 'Одежда',
+        'category' => 'Одежда',
         'cost' => 7500,
         'img' => 'img/lot-5.jpg'
     ],
     5 => [
         'name' => 'Маска Oakley Canopy',
-        'categorie' => 'Разное',
+        'category' => 'Разное',
         'cost' => 5400,
         'img' => 'img/lot-6.jpg'
     ]
@@ -74,7 +74,7 @@ $ads = [
 
             <?php if ($is_auth == 1): ?>
                 <div class="user-menu__image">
-                    <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
+                    <img src="<?=$user_avatar;?>" width="40" height="40" alt="Пользователь">
                  </div>
                 <div class="user-menu__logged">
                     <p><?=$user_name;?></p>
@@ -105,14 +105,13 @@ $ads = [
         <ul class="promo__list">
             <!--Заполненный список из массива категорий-->
             <?php
-                $index = 0;
-                $num_count = count($categories);
-                while ($index < $num_count): ?>
+                $index = 0;                
+                foreach ($categories as $category): ?>
             <li class="promo__item promo__item--boards">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
             </li>
-            <?php $index++;?>
-            <?php endwhile;?>
+            <?php $index++; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -121,19 +120,18 @@ $ads = [
         </div>
         <ul class="lots__list">
             <!--Заполненный список из массива с товарами-->
-            <?php 
-                foreach ($ads as $key => $item): ?>       
+            <?php foreach ($ads as $key => $item): ?>     
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?=$item['img'];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$item['categorie'];?></span>
+                    <span class="lot__category"><?=$item['category'];?></span>
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$item['name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$item['cost'];?><b class="rub">р</b></span>
+                            <span class="lot__cost"><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -141,7 +139,7 @@ $ads = [
                     </div>
                 </div>
             </li>
-        <?php endforeach;?>
+        <?php endforeach; ?>
         </ul>
     </section>
 </main>
@@ -153,12 +151,11 @@ $ads = [
             <!--Заполненный список из массива категорий-->
             <?php
                 $index = 0;
-                $num_count = count($categories);
-                while ($index < $num_count): ?>
+                foreach ($categories as $category): ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$index];?></a>
-            <?php $index++;?>
-            <?php endwhile;?>            
+                <a href="pages/all-lots.html"><?=$categories[$index]; ?></a>
+            <?php $index++; ?>
+            <?php endforeach; ?>            
             </li>
         </ul>
     </nav>
