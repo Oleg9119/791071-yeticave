@@ -44,6 +44,23 @@ $ads = [
         'img' => 'img/lot-6.jpg'
     ]
 ];
+
+function format_cost(
+    $round    
+) {
+    $round = ceil($ads['cost']);
+    if ($round < 1000) {
+        $round = number_format($round, 0, '', '');
+        $round = "$round" . " ₽";
+        return $round;
+    }
+    else {
+        $round = number_format($round, 0, '', ' ');
+        $round = "$round" . " ₽";
+        return $round;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -102,13 +119,10 @@ $ads = [
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--Заполненный список из массива категорий-->
-            <?php
-                $index = 0;                
-                foreach ($categories as $category): ?>
+            <?php foreach ($categories as $category): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
-            </li>
-            <?php $index++; ?>
+                <a class="promo__link" href="pages/all-lots.html"><?=$category?></a>
+            </li>            
             <?php endforeach; ?>
         </ul>
     </section>
@@ -129,7 +143,7 @@ $ads = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><b class="rub">р</b></span>
+                            <span class="lot__cost"><?format_cost(); ?><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -147,12 +161,9 @@ $ads = [
     <nav class="nav">
         <ul class="nav__list container">
             <!--Заполненный список из массива категорий-->
-            <?php
-                $index = 0;
-                foreach ($categories as $category): ?>
+            <?php foreach ($categories as $category): ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$index]; ?></a>
-            <?php $index++; ?>
+                <a href="pages/all-lots.html"><?=$category?></a>            
             <?php endforeach; ?>            
             </li>
         </ul>
