@@ -46,19 +46,10 @@ $ads = [
 ];
 
 function format_cost(
-    $round    
+    $cost    
 ) {
-    $round = ceil($ads['cost']);
-    if ($round < 1000) {
-        $round = number_format($round, 0, '', '');
-        $round = "$round" . " ₽";
-        return $round;
-    }
-    else {
-        $round = number_format($round, 0, '', ' ');
-        $round = "$round" . " ₽";
-        return $round;
-    }
+    $round = ceil($cost);
+    return number_format($round, 0, '', ' ') .' ₽';
 }
 
 ?>
@@ -143,7 +134,7 @@ function format_cost(
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?format_cost(); ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=format_cost($item['cost']); ?><!--<b class="rub">р</b>--></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
