@@ -8,10 +8,10 @@ $user_avatar = 'img/user.jpg';
 $title = ''; // имя страницы
 $content = ''; // контент страницы
 
-date_default_timezone_set('Europe/Moscow');
-$tomorrow_midnight = strtotime('tomorrow midnight'); // полночь следующего дня
-$time_interval = $tomorrow_midnight - time(); // остаток времени до полуночи (неотформатированный)
-$time_interval_format = date('H:i', $time_interval); // остаток времени до полуночи (отформатированный)
+$now_date_time = new datetime('now');
+$midnight_date_time = new datetime('tomorrow midnight');
+$midnight_date_time_diff = $midnight_date_time -> diff($now_date_time);
+$time_interval_format = $midnight_date_time_diff->format('%H:%i');
 
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
 
@@ -57,9 +57,10 @@ $ads = [
 $page_content = include_template('index.php', [
     'categories' => $categories,
     'ads' => $ads,
-    'tomorrow_midnight' => $tomorrow_midnight,
-    'time_interval' => $time_interval,
-    'time_interval_format' => $time_interval_format,
+    'now_date_time' => $now_date_time,
+    'midnight_date_time' => $midnight_date_time,
+    'midnight_date_time_diff' => $midnight_date_time_diff,
+    'time_interval_format' => $time_interval_format
 ]);
 
 $layout_content = include_template('layout.php', [
