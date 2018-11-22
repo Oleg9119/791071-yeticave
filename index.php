@@ -8,9 +8,9 @@ $user_avatar = 'img/user.jpg';
 $title = ''; // имя страницы
 $content = ''; // контент страницы
 
-$now_date_time = new datetime('now');
-$midnight_date_time = new datetime('tomorrow midnight');
-$midnight_date_time_diff = $midnight_date_time -> diff($now_date_time);
+$now_date_time = new DateTime('now');
+$midnight_date_time = new DateTime('tomorrow midnight');
+$midnight_date_time_diff = $midnight_date_time->diff($now_date_time);
 $time_interval_format = $midnight_date_time_diff->format('%H:%i');
 
 $categories = ['Доски и лыжи', 'Крепления', 'Ботинки', 'Одежда', 'Инструменты', 'Разное'];
