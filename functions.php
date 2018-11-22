@@ -15,4 +15,9 @@ function include_template($name, $data) {
 
     return $result;
 }
+
+function format_cost($cost) {
+    $round = ceil($cost);
+    return number_format($round, 0, '', ' ') . ' ₽';
+}
 ?>

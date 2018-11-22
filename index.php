@@ -49,12 +49,6 @@ $ads = [
     ]
 ];
 
-function format_cost($cost)
-{
-    $round = ceil($cost);
-    return number_format($round, 0, '', ' ') . ' ₽';
-}
-
 $page_content = include_template('index.php', [
     'categories' => $categories,
     'ads' => $ads
