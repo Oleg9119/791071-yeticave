@@ -39,5 +39,3 @@ CREATE UNIQUE INDEX catname ON categories(name);
 CREATE UNIQUE INDEX title ON lots(lot_title);
 CREATE UNIQUE INDEX mail ON users(email);
 CREATE UNIQUE INDEX usrname ON users(name);
-
-CREATE INDEX descr ON lots(description);
