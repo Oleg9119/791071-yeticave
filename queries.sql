@@ -18,22 +18,20 @@ INSERT INTO users (dt_reg, email, name, password, avatar_path, contacts)
 VALUES ('2018-11-01 12:00:00', 'vasyapupkin@mail.ru', 'vasya_pupkin', 'k231jasdJK', 'img/avatar-1.jpg', 'Moscow, Arbat St., 123000'),
 ('2018-11-02 12:00:00', 'pavelvolya@mail.ru', 'pavel_volya', 'alfkdohgi09KASD', 'img/avatar-2.jpg', 'St. Petersburg, Sennaya St., 564123');
 
-SELECT * FROM categories;
+SELECT * FROM `categories`;
 
-SELECT lot_title, cost_add, img_path, cost_end, category_id FROM lots
-LEFT JOIN bets ON lots.id = bets.id
-LEFT JOIN categories ON lots.id = categories.id  
-WHERE dt_end>cast((now()) AS date)
-ORDER BY dtlot_add DESC;
+SELECT `lot_title`, `cost_add`, `img_path`, `category_id`, `categories`.`name` AS `category_name`, (SELECT MAX(`cost_end`) FROM `bets` WHERE `lot_id` = `lots`.`id`) AS `current_price` FROM `lots` 
+LEFT JOIN `categories` ON `lots`.`category_id` = `categories`.`id`
+WHERE `dt_end` > CAST((NOW()) AS date) 
+ORDER BY `dtlot_add` DESC;
 
-SELECT lot_title, name FROM lots
-LEFT JOIN categories ON lots.id = categories.id
-ORDER BY lots.id DESC;
+SELECT `lot_title`, `category_id` FROM `lots`
+LEFT JOIN `categories` ON `lots`.`category_id` = `categories`.`id`
+ORDER BY `lots`.`category_id` DESC;
 
-UPDATE lots SET lot_title = '2014 Rossignol District Snowboard New'
-WHERE lot_title = '2014 Rossignol District Snowboard';
+UPDATE `lots` SET `lot_title` = '2014 Rossignol District Snowboard New'
+WHERE `lots`.`id` = 1;
 
-SELECT step FROM lots 
-ORDER BY dtlot_add DESC;
+SELECT * FROM `bets` WHERE `lot_id` = 1 ORDER BY `dtbet_add` DESC;
 
 
