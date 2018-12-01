@@ -1,5 +1,42 @@
 <?php
 require_once('functions.php');
+require_once('init.php');
+
+$result_newlots = '';//список новых лотов
+$result_categories = '';//список категорий
+
+if (!$con) {
+    $error = mysqli_connect_error();
+    $content = include_template('error.php', ['error' => $error]);
+}
+else {
+    //Запрос на получение списка категорий
+    $sql_categories = 'SELECT `id`, `name` FROM `categories`';
+
+    //Выполняем запрос и получаем результат
+    $result_categories = mysqli_query($con, $sql_categories);
+
+    //Запрос выполнен успешно
+    if ($result_categories) {
+        //Получаем все категории в виде двумерного массива
+        $list_categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
+    }
+    else {
+        //Получаем текст последней ошибки
+        $error = mysqli_connect_error();
+        $content = include_template('error.php', ['error' => $error]);
+    }
+    //Запрос на получение списка новых лотов
+    $sql_newlots = 'SELECT `lot_title`, `cost_add`, `img_path`, `category_id`, `categories`.`name` AS `category_name`, (SELECT MAX(`cost_end`) FROM `bets` WHERE `lot_id` = `lots`.`id`) AS `current_price` FROM `lots` LEFT JOIN `categories` ON `lots`.`category_id` = `categories`.`id` WHERE `dt_end` > CAST((NOW()) AS date) ORDER BY `dtlot_add` DESC';
+    
+    if ($result_newlots = mysqli_query($con, $sql_newlots)) {
+        $list_newlots = mysqli_fetch_all($result_newlots, MYSQLI_ASSOC);
+        //Передаем в шаблон результат выполнения
+        $content = include_template('templates/index.php', ['list_newlots' => $list_newlots]);
+}
+
+print(include_template('index.php', ['content' => $content, 'list_categories' => $list_categories]));
+
 
 $is_auth = rand(0, 1);
 
