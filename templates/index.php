@@ -23,6 +23,11 @@
                 $midnight_date_time = new DateTime($item['dt_end']);
                 $midnight_date_time_diff = $midnight_date_time->diff($now_date_time);
                 $time_interval_format = $midnight_date_time_diff->format('%H:%i');
+                $format = '%H:%i';
+                if ($midnight_date_time_diff->days>0) {
+                    $format = '%d дней %H:%i';
+                }
+                $time_interval_format = $midnight_date_time_diff->format($format);
             ?>   
             <li class="lots__item lot">
                 <div class="lot__image">
