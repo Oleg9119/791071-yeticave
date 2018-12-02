@@ -4,6 +4,12 @@ require_once('init.php');
 
 $result_newlots = '';//список новых лотов
 $result_categories = '';//список категорий
+$is_auth = rand(0, 1);
+
+$user_name = ''; //  укажите здесь ваше имя
+$user_avatar = 'img/user.jpg';
+$title = ''; // имя страницы
+$content = ''; // контент страницы
 
 if (!$con) {
     $error = mysqli_connect_error();
@@ -27,23 +33,20 @@ else {
         $content = include_template('error.php', ['error' => $error]);
     }
     //Запрос на получение списка новых лотов
-    $sql_newlots = 'SELECT `lot_title`, `cost_add`, `img_path`, `category_id`, `categories`.`name` AS `category_name`, (SELECT MAX(`cost_end`) FROM `bets` WHERE `lot_id` = `lots`.`id`) AS `current_price` FROM `lots` LEFT JOIN `categories` ON `lots`.`category_id` = `categories`.`id` WHERE `dt_end` > CAST((NOW()) AS date) ORDER BY `dtlot_add` DESC';
+    $sql_newlots = 'SELECT `lot_title`, `cost_add`, `dt_end`, `img_path`, `category_id`, `categories`.`name` AS `category_name`, (SELECT MAX(`cost_end`) FROM `bets` WHERE `lot_id` = `lots`.`id`) AS `current_price` FROM `lots` LEFT JOIN `categories` ON `lots`.`category_id` = `categories`.`id` WHERE `dt_end` > CAST((NOW()) AS date) ORDER BY `dtlot_add` DESC';
     
     if ($result_newlots = mysqli_query($con, $sql_newlots)) {
         $list_newlots = mysqli_fetch_all($result_newlots, MYSQLI_ASSOC);
         //Передаем в шаблон результат выполнения
-        $content = include_template('templates/index.php', ['list_newlots' => $list_newlots]);
+        $content = include_template('index.php', ['list_newlots' => $list_newlots, 'categories' => $list_categories, 'ads' => $list_newlots]);
+    }
 }
+//echo "<pre>";
+//var_dump($list_newlots);
+//echo "</pre>";
+//exit;
+print(include_template('layout.php', ['content' => $content, 'is_auth' => $is_auth, 'user_name' => $user_name, 'user_avatar' => $user_avatar, 'title' => $title, 'categories' => $list_categories]));
 
-print(include_template('index.php', ['content' => $content, 'list_categories' => $list_categories]));
-
-
-$is_auth = rand(0, 1);
-
-$user_name = ''; //  укажите здесь ваше имя
-$user_avatar = 'img/user.jpg';
-$title = ''; // имя страницы
-$content = ''; // контент страницы
 
 $now_date_time = new DateTime('now');
 $midnight_date_time = new DateTime('tomorrow midnight');
@@ -108,5 +111,5 @@ $layout_content = include_template('layout.php', [
     'categories' => $categories,
     'user_avatar' => $user_avatar
 ]);
-print($layout_content);
+//print($layout_content);
 ?>

@@ -18,18 +18,23 @@
         <ul class="lots__list">
             <!--Заполненный список из массива с товарами-->
             <?php foreach ($ads as $key => $item): ?>  
-            $list_newlots   
+            <?php 
+                $now_date_time = new DateTime('now');
+                $midnight_date_time = new DateTime($item['dt_end']);
+                $midnight_date_time_diff = $midnight_date_time->diff($now_date_time);
+                $time_interval_format = $midnight_date_time_diff->format('%H:%i');
+            ?>   
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$item['img'];?>" width="350" height="260" alt="">
+                    <img src="<?=$item['img_path'];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$item['category'];?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=htmlspecialchars($item['name']);?></a></h3>
+                    <span class="lot__category"><?=$item['category_name'];?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=htmlspecialchars($item['lot_title']);?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=format_cost($item['cost']); ?></span>
+                            <span class="lot__cost"><?=format_cost($item['cost_add']); ?></span>
                         </div>
                         <div class="lot__timer timer"><?=$time_interval_format?></div>
                     </div>
